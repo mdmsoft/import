@@ -1,0 +1,21 @@
+{
+	"name": "mdmsoft/import",
+	"description": "Import namespace",
+	"keywords": ["autoload", "namespace", "import"],
+	"license": "BSD-3-Clause",
+	"support": {
+		"issues": "https://github.com/mdmsoft/import/issues",
+		"source": "https://github.com/mdmsoft/import"
+	},
+	"authors": [
+		{
+			"name": "Misbahul Munir",
+			"email": "misbahuldmunir@gmail.com"
+		}
+	],
+	"autoload": {
+		"psr-0": {
+            "Import": "Classes/"
+        }
+	}
+}
