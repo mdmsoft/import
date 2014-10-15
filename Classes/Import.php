@@ -49,7 +49,7 @@ class Import
      */
     public static function load($class)
     {
-        if (empty(static::$_paths) || empty(static::$_classMap)) {
+        if (empty(static::$_paths) && empty(static::$_classMap)) {
             return;
         }
         if (strpos($class, '\\') === false) {
