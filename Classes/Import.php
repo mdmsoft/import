@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Import
+ * Import. Use to import all class under namespace
  *
  * @author Misbahul D Munir <misbahuldmunir@gmail.com>
  * @since 1.0
@@ -12,6 +12,15 @@ class Import
     private static $_classMap = [];
     private static $_registered = false;
 
+    /**
+     * Import namespace
+     * ```
+     * Import::using('yii\bootstrap\*');
+     * Import::using('yii\widgets\ActiveForm');
+     * ```
+     * @param string $namespace
+     * @throws BadMethodCallException
+     */
     public static function using($namespace)
     {
         if (!static::$_registered) {
@@ -33,6 +42,11 @@ class Import
         }
     }
 
+    /**
+     * Autoload class
+     * @param string $class
+     * @return boolean
+     */
     public static function load($class)
     {
         if (empty(static::$_paths) || empty(static::$_classMap)) {
