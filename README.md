@@ -9,19 +9,19 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require mdmsoft/import "*"
+php composer.phar require mdmsoft/import "~1.0"
 ```
 
 for dev-master
 
 ```
-php composer.phar require mdmsoft/import "dev-master"
+php composer.phar require mdmsoft/import "~1.0"
 ```
 
 or add
 
 ```
-"mdmsoft/import": "dev-master"
+"mdmsoft/import": "~1.0"
 ```
 
 to the require section of your `composer.json` file.
