@@ -17,28 +17,45 @@ class Import
      * ```
      * Import::using('yii\bootstrap\*');
      * Import::using('yii\widgets\ActiveForm');
+     *
+     * Import::using([
+     *     'yii\helpers\Html',
+     *     'yii\bootstrap\Html' => 'BHtml'
+     * ]);
      * ```
      * @param string $namespace
      * @throws BadMethodCallException
      */
-    public static function using($namespace)
+    public static function using($namespace, $as = null)
     {
         if (!static::$_registered) {
             spl_autoload_register(['Import', 'load']);
             static::$_registered = true;
         }
+        if (is_array($namespace)) {
+            foreach ($namespace as $class => $alias) {
+                if (is_int($class)) {
+                    static::using($alias);
+                } else {
+                    static::using($class, $alias);
+                }
+            }
+            return;
+        }
+
         $namespace = trim($namespace, '\\');
         if (($pos = strrpos($namespace, '\\')) !== false) {
             $ns = trim(substr($namespace, 0, $pos), '\\');
             $alias = substr($namespace, $pos + 1);
-            if ($alias === '*') {
-                static::$_paths[] = $ns;
-                static::$_paths = array_unique(static::$_paths);
-            } else {
-                static::$_classMap[$alias] = $namespace;
-            }
         } else {
-            throw new BadMethodCallException("Invalid import alias: $namespace");
+            $ns = '';
+            $alias = $namespace;
+        }
+
+        if ($alias === '*') {
+            static::$_paths[$ns] = true;
+        } else {
+            static::$_classMap[$as ? : $alias] = $namespace;
         }
     }
 
@@ -52,14 +69,17 @@ class Import
         if (empty(static::$_paths) && empty(static::$_classMap)) {
             return;
         }
-        if (strpos($class, '\\') === false) {
-            if (isset(static::$_classMap[$class])) {
-                return class_alias(static::$_classMap[$class], $class);
-            } else {
-                foreach (static::$_paths as $path) {
-                    if (class_exists($path . '\\' . $class)) {
-                        return class_alias($path . '\\' . $class, $class);
-                    }
+        if (($pos = strrpos($class, '\\')) !== false) {
+            $alias = substr($class, $pos + 1);
+        } else {
+            $alias = $class;
+        }
+        if (isset(static::$_classMap[$alias])) {
+            return class_alias(static::$_classMap[$alias], $class);
+        } else {
+            foreach (array_keys(static::$_paths) as $path) {
+                if (class_exists(rtrim($path . '\\' . $alias, '\\'))) {
+                    return class_alias(rtrim($path . '\\' . $alias, '\\'), $class);
                 }
             }
         }

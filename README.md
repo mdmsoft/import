@@ -36,12 +36,19 @@ Once the extension is installed, use in your code:
 <?php
 Import::using('yii\bootstrap\Button'); // import yii\bootstrap\Button
 Import::using('yii\widgets\*'); // import all class under namespace yii\widgets
+Import::using('yii\bootstrap\Html', 'BootstrapHtml'); // import with alias
+Import::using([
+    'yii\helpers\Html' => 'Html',
+    'yii\helpers\ArrayHelper',
+]);
 ?>
 <?php
 echo Button::widget([
     'label' => 'Action Test',
     'options' => ['class' => 'btn-lg'],
 ]);
+
+echo BootstrapHtml::icon('star');
 ?>
 
 <?php Spaceless::begin(); ?>
