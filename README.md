@@ -1,6 +1,14 @@
 Import Namespace
 ========================
 
+Import classes under namespace and used without namespace.
+
+[![Latest Stable Version](https://poser.pugx.org/mdmsoft/import/v/stable)](https://packagist.org/packages/mdmsoft/import)
+[![Total Downloads](https://poser.pugx.org/mdmsoft/import/downloads.png)](https://packagist.org/packages/mdmsoft/import)
+[![License](https://poser.pugx.org/mdmsoft/import/license)](https://packagist.org/packages/mdmsoft/import)
+[![Dependency Status](https://www.versioneye.com/php/mdmsoft:import/dev-master/badge.png)](https://www.versioneye.com/php/mdmsoft:import/dev-master)
+[![Code Climate](https://img.shields.io/codeclimate/github/mdmsoft/import.svg)](https://codeclimate.com/github/mdmsoft/import)
+
 Installation
 ------------
 
