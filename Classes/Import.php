@@ -28,9 +28,9 @@ class Import
      */
     public static function using($namespace, $as = null)
     {
-        if (!static::$_registered) {
+        if (!self::$_registered) {
             spl_autoload_register(['Import', 'load']);
-            static::$_registered = true;
+            self::$_registered = true;
         }
         if (is_array($namespace)) {
             foreach ($namespace as $class => $alias) {
@@ -53,9 +53,9 @@ class Import
         }
 
         if ($alias === '*') {
-            static::$_paths[$ns] = true;
+            self::$_paths[$ns] = true;
         } else {
-            static::$_classMap[$as ? : $alias] = $namespace;
+            self::$_classMap[$as ? : $alias] = $namespace;
         }
     }
 
@@ -66,7 +66,7 @@ class Import
      */
     public static function load($class)
     {
-        if (empty(static::$_paths) && empty(static::$_classMap)) {
+        if (empty(self::$_paths) && empty(self::$_classMap)) {
             return;
         }
         if (($pos = strrpos($class, '\\')) !== false) {
@@ -74,10 +74,10 @@ class Import
         } else {
             $alias = $class;
         }
-        if (isset(static::$_classMap[$alias])) {
-            return class_alias(static::$_classMap[$alias], $class);
+        if (isset(self::$_classMap[$alias])) {
+            return class_alias(self::$_classMap[$alias], $class);
         } else {
-            foreach (array_keys(static::$_paths) as $path) {
+            foreach (array_keys(self::$_paths) as $path) {
                 if (class_exists(rtrim($path . '\\' . $alias, '\\'))) {
                     return class_alias(rtrim($path . '\\' . $alias, '\\'), $class);
                 }
